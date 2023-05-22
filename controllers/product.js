@@ -10,6 +10,7 @@ exports.getProductById = (req,res,next,id)=>{
             return res.status(400).json({error:"Product not found in DB"})
         }
         req.product = product;
+        
         next();
     });
 
@@ -68,17 +69,20 @@ exports.createProduct = (req, res) => {
 };
   
 exports.getProduct = (req, res) => {
-    req.product.photo = undefined;
+    // req.product.photo = undefined;
+    // console.log(req.body);
     return res.json(req.product);
   };
   
 //middleware
-exports.photo = (req, res, next) => {
-    if (req.product.photo.data) {
+exports.getPhoto = (req, res) => {
+  console.log("Works till here");
+  console.log(req.body);
+    if(req.product.photo.data) {
       res.set("Content-Type", req.product.photo.contentType);
       return res.send(req.product.photo.data);
     }
-    next();
+    
   };
 
   
